@@ -9,6 +9,7 @@ import {
 import axios from "../api/axios";
 
 import "./FormStyle.scss";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const nameRef = useRef();
@@ -103,7 +104,7 @@ const Register = () => {
         <section id="content-section">
           <h1>Success!</h1>
           <p>
-            <a href="#">Sign In</a>
+            <Link to="/login">Sign In</Link>
           </p>
         </section>
       ) : (
@@ -252,7 +253,7 @@ const Register = () => {
             Already registered?
             <br />
             <span className="line">
-              <a href="#">Sign In</a>
+              <Link to="/login">Sign In</Link>
             </span>
           </p>
         </section>

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 import "./FormStyle.scss";
 import axios from "../api/axios";
@@ -15,7 +16,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
-  const [success, setSuccess] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const previousPage = location.state?.from?.pathname || "/home";
 
   const LOGIN_URL = "/api/users/login";
 
@@ -34,15 +38,20 @@ const Login = () => {
         LOGIN_URL,
         JSON.stringify({ userName, password }),
         {
-          withCredentials: true,
-          headers: "Content-Type: application/json",
+          headers: {
+            "Content-Type": "application/json",
+            withCredentials: true,
+          },
         }
       );
 
       const { data } = response;
       const { accessToken, roles } = data;
+      //encrypt the password from UI
       setAuth({ userName, password, accessToken, roles });
-      setSuccess(true);
+      console.log(previousPage);
+
+      navigate(previousPage, { replace: true });
       setUserName("");
       setPassword("");
     } catch (error) {
@@ -61,57 +70,50 @@ const Login = () => {
 
   return (
     <>
-      {success ? (
-        <section id="content-section">
-          <h1>You are logged In!</h1>
-          <p>
-            <a href="#">Go to Home</a>
-          </p>
-        </section>
-      ) : (
-        <section id="content-section">
-          <p
-            ref={errorRef}
-            className={errorMessage ? "errMsg" : "offscreen"}
-            aria-live="assertive"
-          >
-            {errorMessage}
-          </p>
-          <h1>Sign In</h1>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:</label>
-            <input
-              id="username"
-              type="text"
-              ref={nameRef}
-              value={userName}
-              autoComplete="off"
-              onChange={(e) => setUserName(e.target.value)}
-              required
-            />
+      (
+      <section id="content-section">
+        <p
+          ref={errorRef}
+          className={errorMessage ? "errMsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errorMessage}
+        </p>
+        <h1>Sign In</h1>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="username">Username:</label>
+          <input
+            id="username"
+            type="text"
+            ref={nameRef}
+            value={userName}
+            autoComplete="off"
+            onChange={(e) => setUserName(e.target.value)}
+            required
+          />
 
-            {/* password */}
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              required
-            />
+          {/* password */}
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            required
+          />
 
-            <button type="submit">Sign In</button>
-          </form>
+          <button type="submit">Sign In</button>
+        </form>
 
-          <p>
-            Need an Account?
-            <br />
-            <span className="line">
-              <a href="#">Sign Up</a>
-            </span>
-          </p>
-        </section>
-      )}
+        <p>
+          Need an Account?
+          <br />
+          <span className="line">
+            <Link to="/register">Sign Up</Link>
+          </span>
+        </p>
+      </section>
+      )
     </>
   );
 };
