@@ -1,7 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const Home = () => {
+  const { setAuth } = useAuth();
+  const logout = async () => {
+    // if used in more components, this should be in context
+    // axios to /logout endpoint
+    console.log("logout");
+    setAuth({});
+    Navigate("/links");
+  };
+
   return (
     <div>
       <section id="content-section">
@@ -15,7 +25,7 @@ const Home = () => {
         <br />
         <Link to="/links">Go to the link page</Link>
         <div className="flexGrow">
-          <button>Sign Out</button>
+          <button onClick={logout}>Sign Out</button>
         </div>
       </section>
     </div>

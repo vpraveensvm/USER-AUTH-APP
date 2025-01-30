@@ -1,7 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "bulma/css/bulma.min.css";
 import "./index.scss";
-import "./bulma-scoped.scss";
+
 import App from "./App.jsx";
 import { AuthProvider } from "./context/AuthProvider.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

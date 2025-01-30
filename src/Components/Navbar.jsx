@@ -3,7 +3,7 @@ import React from "react";
 const Navbar = () => {
   return (
     <>
-      <div className="bulma-scope">
+      <div>
         <nav
           className="navbar is-dark"
           role="navigation"
@@ -36,7 +36,7 @@ const Navbar = () => {
             <div class="navbar-end">
               <div class="navbar-item">
                 <div class="buttons">
-                  <a href="/register" class="button is-primary">
+                  <a href="/register" class="button is-light">
                     <strong>Sign up</strong>
                   </a>
                   <a href="/login" class="button is-light">
