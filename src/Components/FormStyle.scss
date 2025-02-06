@@ -1,6 +1,6 @@
 #content-section {
   width: 100%;
-  margin: 0 auto;
+  margin: 2em auto 0;
   max-width: 420px;
   min-height: 400px;
   display: flex;
@@ -77,4 +77,20 @@ button {
   font-weight: bold;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.persistCheckbox {
+  font-size: 0.75rem;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.persistCheckbox label {
+  margin: 0;
+}
+
+[type="checkbox"] {
+  margin: 0 5px 2px 2px;
 }

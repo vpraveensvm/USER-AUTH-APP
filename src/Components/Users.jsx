@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useAuth } from "../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -20,7 +20,6 @@ const Users = () => {
         const response = await axiosPrivate.get("/api/users", {
           signal: controller.signal,
         });
-        console.log(response.data);
         if (isMounted) {
           setUsers(response.data);
         }
@@ -39,7 +38,6 @@ const Users = () => {
 
     return () => {
       isMounted = false;
-      console.log("in user page return");
       controller.abort();
     };
   }, [auth]);

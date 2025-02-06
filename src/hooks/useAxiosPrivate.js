@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { axiosPrivate } from "../api/axios";
-import { useAuth } from "./useAuth";
+import useAuth from "./useAuth";
 import useRefreshToken from "./useRefreshToken";
 
 const useAxiosPrivate = () => {
@@ -22,7 +22,6 @@ const useAxiosPrivate = () => {
       (response) => response,
       async (error) => {
         const prevRequestConfig = error?.config;
-        console.log("prevRequestConfig", prevRequestConfig);
         if (error?.response?.status === 401 && !prevRequestConfig.sent) {
           prevRequestConfig.sent = true;
           const newAccessToken = await refresh();

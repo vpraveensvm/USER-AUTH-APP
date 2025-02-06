@@ -4,13 +4,13 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 
 import "./FormStyle.scss";
 import axios from "../api/axios";
-import { useAuth } from "../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
   const nameRef = useRef();
   const errorRef = useRef();
 
-  const { setAuth } = useAuth();
+  const { setAuth, setPersist, persist } = useAuth();
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +49,6 @@ const Login = () => {
       const { accessToken, roles } = data;
       //encrypt the password from UI
       setAuth({ userName, password, accessToken, roles });
-      console.log(previousPage);
 
       navigate(previousPage, { replace: true });
       setUserName("");
@@ -68,9 +67,16 @@ const Login = () => {
     }
   };
 
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
+
   return (
     <>
-      (
       <section id="content-section">
         <p
           ref={errorRef}
@@ -103,6 +109,16 @@ const Login = () => {
           />
 
           <button type="submit">Sign In</button>
+
+          <div className="persistCheckbox">
+            <input
+              type="checkbox"
+              id="checkbox"
+              onChange={togglePersist}
+              checked={persist}
+            />
+            <label htmlFor="checkbox">Trust this device?</label>
+          </div>
         </form>
 
         <p>
@@ -113,7 +129,6 @@ const Login = () => {
           </span>
         </p>
       </section>
-      )
     </>
   );
 };

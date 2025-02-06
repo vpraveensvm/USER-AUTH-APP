@@ -65,8 +65,6 @@ const Register = () => {
       setErrorMessage("Invalid username or password or confirm password.");
     }
 
-    console.log(userName, password);
-
     try {
       const response = await axios.post(
         REGISTER_URL,
@@ -78,7 +76,6 @@ const Register = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
 
       setSuccess(true);
     } catch (error) {

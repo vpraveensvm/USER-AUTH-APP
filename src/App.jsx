@@ -9,6 +9,8 @@ import Admin from "./Components/Admin";
 import Home from "./Components/Home";
 import RequireAuth from "./Components/RequireAuth";
 import Unauthorized from "./Components/Unauthorized";
+import PersistAuth from "./Components/PersistAuth";
+import Dashboard from "./Components/Dashboard";
 
 const ROLES = {
   Admin: 101,
@@ -22,17 +24,20 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* public routes */}
+          <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/links" element={<Links />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-            <Route path="/admin" element={<Admin />} />
-          </Route>
+          <Route element={<PersistAuth />}>
+            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+              <Route path="/admin" element={<Admin />} />
+            </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path="/home" element={<Home />} />
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/home" element={<Home />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

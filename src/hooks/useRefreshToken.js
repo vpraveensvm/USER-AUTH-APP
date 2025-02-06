@@ -1,4 +1,4 @@
-import { useAuth } from "./useAuth";
+import useAuth from "./useAuth";
 import axios from "../api/axios";
 
 const REFRESH_URL = "/api/users/refresh";
@@ -14,12 +14,13 @@ const useRefreshToken = () => {
       withCredentials: true,
     });
 
+    console.log("refresh response", response.data);
+
     setAuth((prev) => {
-      console.log(JSON.stringify(prev));
-      console.log(response.data.accessToken);
       return {
         ...prev,
         accessToken: response.data.accessToken,
+        roles: response.data.roles,
       };
     });
 
